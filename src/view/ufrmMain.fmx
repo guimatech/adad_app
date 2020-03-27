@@ -1,0 +1,187 @@
+object frmMain: TfrmMain
+  Left = 0
+  Top = 0
+  Caption = 'Main'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object lytMainWrapper: TLayout
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object lytNextEvent: TLayout
+      Align = Top
+      Size.Width = 640.000000000000000000
+      Size.Height = 225.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      object recNextEvent: TRectangle
+        Align = Client
+        Fill.Kind = Gradient
+        Fill.Gradient.Points = <
+          item
+            Color = xFF2A2A86
+            Offset = 0.000000000000000000
+          end
+          item
+            Color = xFF3BA7B8
+            Offset = 1.000000000000000000
+          end>
+        Fill.Gradient.StartPosition.X = 0.850103795528411900
+        Fill.Gradient.StartPosition.Y = 1.000000000000000000
+        Fill.Gradient.StopPosition.X = 0.149896204471588100
+        Fill.Gradient.StopPosition.Y = 0.000000003202160315
+        Size.Width = 640.000000000000000000
+        Size.Height = 225.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Color = claNull
+        object lblNextEvent: TLabel
+          Align = Top
+          AutoSize = True
+          StyledSettings = [Family, Style]
+          Size.Width = 640.000000000000000000
+          Size.Height = 24.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 18.000000000000000000
+          TextSettings.FontColor = claWhite
+          TextSettings.HorzAlign = Center
+          Text = 'Pr'#243'ximo evento'
+          TabOrder = 0
+        end
+        object lblDescriptionEvent: TLabel
+          Align = Bottom
+          AutoSize = True
+          StyledSettings = [Family, Style]
+          Position.Y = 201.000000000000000000
+          Size.Width = 640.000000000000000000
+          Size.Height = 24.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 18.000000000000000000
+          TextSettings.FontColor = claWhite
+          TextSettings.HorzAlign = Center
+          Text = 'AcampADAD Extreme'
+          TabOrder = 1
+        end
+        object lblSelectedEvent: TLabel
+          Align = Client
+          AutoSize = True
+          StyledSettings = [Family, Style]
+          Size.Width = 640.000000000000000000
+          Size.Height = 142.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 100.000000000000000000
+          TextSettings.FontColor = claWhite
+          TextSettings.HorzAlign = Center
+          Text = '01'
+          TabOrder = 2
+        end
+        object lblDayOfTheWeek: TLabel
+          Align = Bottom
+          AutoSize = True
+          StyledSettings = [Family, Style]
+          Position.Y = 166.000000000000000000
+          Size.Width = 640.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 14.000000000000000000
+          TextSettings.FontColor = claWhite
+          TextSettings.HorzAlign = Center
+          Text = 'Sexta-feira'
+          TabOrder = 3
+        end
+        object lblMonthYear: TLabel
+          Align = Bottom
+          AutoSize = True
+          StyledSettings = [Family, Style]
+          Position.Y = 185.000000000000000000
+          Size.Width = 640.000000000000000000
+          Size.Height = 16.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.FontColor = claWhite
+          TextSettings.HorzAlign = Center
+          Text = 'Maio de 2020'
+          TabOrder = 4
+        end
+      end
+    end
+    object lytListNextEvents: TLayout
+      Align = Client
+      Size.Width = 640.000000000000000000
+      Size.Height = 255.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      object lvNextEvents: TListView
+        ItemAppearanceClassName = 'TListItemAppearance'
+        ItemEditAppearanceClassName = 'TListItemShowCheckAppearance'
+        HeaderAppearanceClassName = 'TListHeaderObjects'
+        FooterAppearanceClassName = 'TListHeaderObjects'
+        Align = Client
+        Size.Width = 640.000000000000000000
+        Size.Height = 255.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+      end
+    end
+  end
+  object tblEvents: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 480
+    Top = 264
+    object tblEventsid: TIntegerField
+      FieldName = 'id'
+    end
+    object tblEventsdescription: TStringField
+      FieldName = 'description'
+      Size = 255
+    end
+    object tblEventsdate: TDateField
+      FieldName = 'date'
+    end
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSet = tblEvents
+    ScopeMappings = <>
+    Left = 480
+    Top = 364
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 480
+    Top = 314
+    object LinkListControlToField1: TLinkListControlToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      FieldName = 'description'
+      Control = lvNextEvents
+      FillExpressions = <>
+      FillHeaderExpressions = <>
+      FillHeaderFieldName = 'date'
+      FillBreakGroups = <>
+    end
+    object LinkPropertyToFieldText: TLinkPropertyToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      FieldName = 'description'
+      Component = lblDescriptionEvent
+      ComponentProperty = 'Text'
+    end
+  end
+end
