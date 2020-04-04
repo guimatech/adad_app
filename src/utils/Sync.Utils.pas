@@ -4,7 +4,7 @@ interface
 
 uses
   RESTRequest4D.Request.Intf, RESTRequest4D.Request, REST.Types, System.JSON,
-  Data.DB;
+  Data.DB, Connection.Provider;
 
 type
   TSyncUtils = class
@@ -39,9 +39,18 @@ end;
 
 procedure TSyncUtils.GetEvents;
 begin
-  Request.SetMethod(rmGET);
-  Request.SetResource(sRESOURCE_EVENTS);
-  Request.Execute;
+  ConnectionProvider.FDConnection.StartTransaction;
+  try
+    Request.SetMethod(rmGET);
+    ConnectionProvider.FDConnection.ExecSQL('DELETE FROM event');
+    SetDataSetAdapter(ConnectionProvider.qryEvent);
+    Request.SetResource(sRESOURCE_NEXT_EVENTS);
+    Request.Execute;
+    ConnectionProvider.FDConnection.Commit;
+    ConnectionProvider.qryEvent.Refresh;
+  except
+    ConnectionProvider.FDConnection.Rollback;
+  end;
 end;
 
 function TSyncUtils.SetDataSetAdapter(const ADataSet: TDataSet): IRequest;

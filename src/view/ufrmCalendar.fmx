@@ -1,23 +1,20 @@
-object frmMain: TfrmMain
-  Left = 0
-  Top = 0
-  Caption = 'Main'
-  ClientHeight = 480
-  ClientWidth = 640
-  FormFactor.Width = 320
-  FormFactor.Height = 480
-  FormFactor.Devices = [Desktop]
+inherited frmCalendar: TfrmCalendar
+  Caption = 'frmMenuLeft1'
   OnCreate = FormCreate
   DesignerMasterStyle = 0
-  object lytMainWrapper: TLayout
+  object lytMainWrapper: TLayout [1]
     Align = Client
-    Size.Width = 640.000000000000000000
-    Size.Height = 480.000000000000000000
+    Margins.Left = -1.000000000000000000
+    Margins.Top = -1.000000000000000000
+    Margins.Right = -1.000000000000000000
+    Margins.Bottom = -1.000000000000000000
+    Size.Width = 392.000000000000000000
+    Size.Height = 482.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
     object lytNextEvent: TLayout
       Align = Top
-      Size.Width = 640.000000000000000000
+      Size.Width = 392.000000000000000000
       Size.Height = 225.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 2
@@ -37,7 +34,7 @@ object frmMain: TfrmMain
         Fill.Gradient.StartPosition.Y = 1.000000000000000000
         Fill.Gradient.StopPosition.X = 0.149896204471588100
         Fill.Gradient.StopPosition.Y = 0.000000003202160315
-        Size.Width = 640.000000000000000000
+        Size.Width = 392.000000000000000000
         Size.Height = 225.000000000000000000
         Size.PlatformDefault = False
         Stroke.Color = claNull
@@ -45,7 +42,7 @@ object frmMain: TfrmMain
           Align = Top
           AutoSize = True
           StyledSettings = [Family, Style]
-          Size.Width = 640.000000000000000000
+          Size.Width = 392.000000000000000000
           Size.Height = 24.000000000000000000
           Size.PlatformDefault = False
           TextSettings.Font.Size = 18.000000000000000000
@@ -59,7 +56,7 @@ object frmMain: TfrmMain
           AutoSize = True
           StyledSettings = [Family, Style]
           Position.Y = 201.000000000000000000
-          Size.Width = 640.000000000000000000
+          Size.Width = 392.000000000000000000
           Size.Height = 24.000000000000000000
           Size.PlatformDefault = False
           TextSettings.Font.Size = 18.000000000000000000
@@ -72,13 +69,12 @@ object frmMain: TfrmMain
           Align = Client
           AutoSize = True
           StyledSettings = [Family, Style]
-          Size.Width = 640.000000000000000000
+          Size.Width = 392.000000000000000000
           Size.Height = 142.000000000000000000
           Size.PlatformDefault = False
           TextSettings.Font.Size = 100.000000000000000000
           TextSettings.FontColor = claWhite
           TextSettings.HorzAlign = Center
-          Text = '01'
           TabOrder = 2
         end
         object lblDayOfWeek: TLabel
@@ -86,13 +82,12 @@ object frmMain: TfrmMain
           AutoSize = True
           StyledSettings = [Family, Style]
           Position.Y = 166.000000000000000000
-          Size.Width = 640.000000000000000000
+          Size.Width = 392.000000000000000000
           Size.Height = 19.000000000000000000
           Size.PlatformDefault = False
           TextSettings.Font.Size = 14.000000000000000000
           TextSettings.FontColor = claWhite
           TextSettings.HorzAlign = Center
-          Text = 'Sexta-feira'
           TabOrder = 3
         end
         object lblMonthYear: TLabel
@@ -100,57 +95,58 @@ object frmMain: TfrmMain
           AutoSize = True
           StyledSettings = [Family, Style]
           Position.Y = 185.000000000000000000
-          Size.Width = 640.000000000000000000
+          Size.Width = 392.000000000000000000
           Size.Height = 16.000000000000000000
           Size.PlatformDefault = False
           TextSettings.FontColor = claWhite
           TextSettings.HorzAlign = Center
-          Text = 'Maio de 2020'
           TabOrder = 4
         end
       end
     end
     object lytListNextEvents: TLayout
       Align = Client
-      Size.Width = 640.000000000000000000
-      Size.Height = 255.000000000000000000
+      Size.Width = 392.000000000000000000
+      Size.Height = 257.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 1
       object lvNextEvents: TListView
-        ItemAppearanceClassName = 'TListItemAppearance'
-        ItemEditAppearanceClassName = 'TListItemShowCheckAppearance'
+        ItemAppearanceClassName = 'TDynamicAppearance'
+        ItemEditAppearanceClassName = 'TDynamicAppearance'
         HeaderAppearanceClassName = 'TListHeaderObjects'
         FooterAppearanceClassName = 'TListHeaderObjects'
         Align = Client
-        Size.Width = 640.000000000000000000
-        Size.Height = 255.000000000000000000
+        Size.Width = 392.000000000000000000
+        Size.Height = 257.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
+        ItemAppearanceObjects.ItemObjects.ObjectsCollection = <
+          item
+            AppearanceObjectName = 'Text1'
+            AppearanceClassName = 'TTextObjectAppearance'
+          end>
+        ItemAppearanceObjects.ItemEditObjects.ObjectsCollection = <
+          item
+            AppearanceObjectName = 'Text1'
+            AppearanceClassName = 'TTextObjectAppearance'
+          end>
+        CanSwipeDelete = False
+        SearchVisible = True
+        PullToRefresh = True
       end
     end
   end
-  object btnSync: TSpeedButton
-    Anchors = [akTop, akRight]
-    Position.X = 592.000000000000000000
-    Size.Width = 48.000000000000000000
-    Size.Height = 48.000000000000000000
-    Size.PlatformDefault = False
-    StyleLookup = 'refreshtoolbutton'
-    OnClick = btnSyncClick
-  end
-  object btnMenuLeft: TSpeedButton
-    Size.Width = 48.000000000000000000
-    Size.Height = 48.000000000000000000
-    Size.PlatformDefault = False
-    StyleLookup = 'drawertoolbutton'
-  end
-  object lytMenuAdd: TLayout
+  object lytMenuAdd: TLayout [2]
     Align = Contents
+    Margins.Left = -1.000000000000000000
+    Margins.Top = -1.000000000000000000
+    Margins.Right = -1.000000000000000000
+    Margins.Bottom = -1.000000000000000000
     Size.Width = 640.000000000000000000
     Size.Height = 480.000000000000000000
     Size.PlatformDefault = False
     Visible = False
-    TabOrder = 4
+    TabOrder = 5
     object recMenuAdd: TRectangle
       Align = Client
       Fill.Color = claBlack
@@ -159,13 +155,11 @@ object frmMain: TfrmMain
       Size.Height = 480.000000000000000000
       Size.PlatformDefault = False
       Stroke.Color = claNull
-      OnClick = recMenuAddClick
     end
     object AnimaMenuAdd: TFloatAnimation
       AnimationType = InOut
       Duration = 0.500000000000000000
       Interpolation = Circular
-      OnFinish = AnimaMenuAddFinish
       PropertyName = 'Position.Y'
       StartValue = 500.000000000000000000
       StopValue = 400.000000000000000000
@@ -265,7 +259,16 @@ object frmMain: TfrmMain
       end
     end
   end
-  object btnAdd: TCircle
+  object btnSync: TSpeedButton [3]
+    Anchors = [akTop, akRight]
+    Position.X = 592.000000000000000000
+    Size.Width = 48.000000000000000000
+    Size.Height = 48.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'refreshtoolbutton'
+    OnClick = btnSyncClick
+  end
+  object btnAdd: TCircle [4]
     Anchors = [akRight, akBottom]
     Fill.Color = xFF3BA7B8
     Position.X = 568.000000000000000000
@@ -289,67 +292,111 @@ object frmMain: TfrmMain
       TabOrder = 0
     end
   end
-  object tblEvents: TFDMemTable
-    FieldDefs = <>
-    IndexDefs = <>
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    StoreDefs = True
-    Left = 480
-    Top = 264
-    object tblEventsid: TIntegerField
-      FieldName = 'id'
+  inherited mvMenuLeft: TMultiView
+    inherited recMainMenu: TRectangle
+      inherited scrollMenuLeft: TVertScrollBox
+        Viewport.Width = 251.000000000000000000
+        Viewport.Height = 402.000000000000000000
+        inherited recCalendar: TRectangle
+          inherited btnCalendar: TSpeedButton
+            Size.Height = 40.000000000000000000
+            inherited lblCalendar: TLabel
+              Size.Height = 40.000000000000000000
+            end
+            inherited lytIconCalendar: TLayout
+              Size.Height = 40.000000000000000000
+            end
+          end
+        end
+        inherited recClassRecordBook: TRectangle
+          inherited btnClassRecordBook: TSpeedButton
+            Size.Height = 40.000000000000000000
+            inherited lblClassRecordBook: TLabel
+              Size.Height = 40.000000000000000000
+            end
+            inherited lytClassRecordBook: TLayout
+              Size.Height = 40.000000000000000000
+            end
+          end
+        end
+        inherited recRegistrations: TRectangle
+          inherited btnRegistrations: TSpeedButton
+            Size.Height = 40.000000000000000000
+            inherited lblRegistrations: TLabel
+              Size.Height = 40.000000000000000000
+            end
+            inherited lytRegistrations: TLayout
+              Size.Height = 40.000000000000000000
+            end
+          end
+        end
+      end
+      inherited recProfileWrapper: TRectangle
+        inherited lytTopProfile: TLayout
+          inherited lytPhotoProfile: TLayout
+            inherited recPhotoProfile: TCircle
+              Fill.Bitmap.Bitmap.PNG = {
+                89504E470D0A1A0A0000000D49484452000000300000003008060000005702F9
+                87000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                020F494441546843ED974B4A03411086F3321350915C40774A34E2155C281E41
+                5CEB428FA2A018227A0B716D7C8037105DE8D6C75631464C621E7E95A985421E
+                4E4F9219A43F68BA32D355F577A7BB662662B1582C164B3F69341AF3F57A3D57
+                ABD56ECBE572499AD85CDBE75E5687850FC439883C4470BDD901EED518738099
+                54B770A0E22F5C99BD61EC395D782681A02357DADFC127AFEEC1227BBEDBB6E9
+                846C277CE7348C3131ED8D41CB86E3389EE3E013C7775D7F1AE37B02ACE2929A
+                9E6102CB6A1AE37B02ECE549353D43799D52D318DF1380A6F626F8F16DE17B02
+                F178FC514DCF24128907358DF13D81582C5650D333D168F454CDE0E01067A524
+                4A69F48296D1590D132C1C64793DF0043E39750F1EF4241174E64AEB0D630B74
+                23EA1E0E102493C877DB4E724F561E335CE27F22AF0788DCA3C6DF20F85D9AD8
+                5CDB0DCD9EB758FE1151ED8DE1608ED32DD216A82E199ECC331CDA348736CDB5
+                5119031FBC72BCF2E47DA1DDD3EEB8764D7F492BB943868888A66D21F48A2AF3
+                D5AA9106E05B9518C4DAD485182C928495DD21715135F40D62BE117B1B734CD3
+                F517C4AF54ABD56737DDE020C713B97C7FE8FC82806BF2776B8E8143AE0A3957
+                35BD3F08344DC04F8D3D34C8592677466598C3BE3CD1984387DCC72AA3233DCB
+                280B51741C67F015A20D954AA5984AA526F4675B7A4E405642CD40E039D15563
+                3F3EEA03C54EC062B1582C96E08844BE014FD4B891120C78BD0000000049454E
+                44AE426082}
+            end
+          end
+          inherited lytCenterDetailProfile: TLayout
+            inherited lblUser: TLabel
+              Size.Height = 16.000000000000000000
+            end
+            inherited Label1: TLabel
+              Size.Height = 22.000000000000000000
+            end
+          end
+        end
+      end
     end
-    object tblEventsdescription: TStringField
-      FieldName = 'description'
-      Size = 255
-    end
-    object tblEventsdate: TDateField
-      FieldName = 'date'
-    end
-    object tblEventsday: TStringField
-      FieldName = 'day'
-      Size = 2
-    end
-    object tblEventsdayOfWeek: TStringField
-      FieldName = 'dayOfWeek'
-      Size = 15
-    end
-    object tblEventsmonthOfyear: TStringField
-      FieldName = 'monthOfyear'
-      Size = 100
-    end
-  end
-  object BindSourceDB1: TBindSourceDB
-    DataSet = tblEvents
-    ScopeMappings = <>
-    Left = 480
-    Top = 320
   end
   object BindingsList1: TBindingsList
     Methods = <>
     OutputConverters = <>
-    Left = 480
-    Top = 373
+    Left = 492
+    Top = 309
     object LinkListControlToField1: TLinkListControlToField
       Category = 'Quick Bindings'
       DataSource = BindSourceDB1
       FieldName = 'description'
       Control = lvNextEvents
-      FillExpressions = <>
+      FillExpressions = <
+        item
+          SourceMemberName = 'date'
+          ControlMemberName = 'Detail'
+        end
+        item
+          SourceMemberName = 'description'
+          ControlMemberName = 'Text1'
+        end>
       FillHeaderExpressions = <>
       FillBreakGroups = <>
     end
     object LinkPropertyToFieldText: TLinkPropertyToField
       Category = 'Quick Bindings'
       DataSource = BindSourceDB1
-      FieldName = 'monthOfyear'
-      Component = lblMonthYear
+      FieldName = 'day'
+      Component = lblSelectedEvent
       ComponentProperty = 'Text'
     end
     object LinkPropertyToFieldText2: TLinkPropertyToField
@@ -362,16 +409,15 @@ object frmMain: TfrmMain
     object LinkPropertyToFieldText3: TLinkPropertyToField
       Category = 'Quick Bindings'
       DataSource = BindSourceDB1
-      FieldName = 'day'
-      Component = lblSelectedEvent
+      FieldName = 'monthOfyear'
+      Component = lblMonthYear
       ComponentProperty = 'Text'
     end
-    object LinkPropertyToFieldText4: TLinkPropertyToField
-      Category = 'Quick Bindings'
-      DataSource = BindSourceDB1
-      FieldName = 'description'
-      Component = lblDescriptionEvent
-      ComponentProperty = 'Text'
-    end
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSet = ConnectionProvider.qryEvent
+    ScopeMappings = <>
+    Left = 492
+    Top = 263
   end
 end
