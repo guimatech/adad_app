@@ -1,0 +1,317 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:adad_app/blocs/floating_cards_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
+
+class FloatingCards extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _FloatingCardsState();
+  }
+}
+
+class _FloatingCardsState extends State<FloatingCards>
+    with SingleTickerProviderStateMixin {
+  bool _goingUp = false;
+
+  AnimationController _animationController;
+
+  double top = 0;
+  double maxTop = 0;
+  Offset position = Offset(0, 0);
+  double height = 0;
+  double currentToPercentage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 150),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    FloatingCardsBloc bloc = Provider.of<FloatingCardsBloc>(context);
+
+    bloc.topAnimationController.add(_animationController);
+
+    double _height = MediaQuery.of(context).size.height;
+
+    Observable combined = Observable.combineLatest4(
+        bloc.position.stream,
+        bloc.size.stream,
+        bloc.top.stream,
+        bloc.height.stream, (position, size, top, height) {
+      double maxTop = _height - position.dy - 120;
+      double currentToPercentage = 100 / maxTop * bloc.top.value;
+
+      bloc.maxTop.add(maxTop);
+      bloc.topPercentage.add(currentToPercentage);
+
+      setState(() {
+        this.top = top + ((size.height - height) / 2) - 20;
+        this.currentToPercentage = currentToPercentage;
+        this.height = height;
+        this.maxTop = maxTop;
+      });
+    });
+
+    return StreamBuilder(
+      stream: combined,
+      builder: (_, __) => Transform.translate(
+        offset: Offset(0, this.top),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: this.height,
+          child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            child: _buildPageView(context),
+            onTap: () {
+              if (bloc.top.value == this.maxTop) {
+                bloc.animateTopEventSink.add(AnimateTopToUpEvent());
+              }
+            },
+            onPanUpdate: (DragUpdateDetails details) {
+              if (bloc.topAnimationController.value.isAnimating) {
+                bloc.topAnimationController.value.stop(canceled: true);
+              }
+
+              if (bloc.top.value + details.delta.dy > 0 &&
+                  bloc.top.value <= this.maxTop) {
+                bool goingUp = false;
+
+                if (details.delta.dy < 0) {
+                  goingUp = true;
+                }
+
+                double newTop =
+                    max(0, min(this.maxTop, bloc.top.value + details.delta.dy));
+
+                bloc.top.add(newTop);
+
+                setState(() {
+                  _goingUp = goingUp;
+                });
+              }
+            },
+            onPanEnd: (DragEndDetails details) {
+              if (_goingUp || this.currentToPercentage <= 20) {
+                bloc.animateTopEventSink.add(AnimateTopToUpEvent());
+              } else {
+                bloc.animateTopEventSink.add(AnimateTopToDownEvent());
+              }
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  PageView _buildPageView(BuildContext context) {
+    FloatingCardsBloc bloc = Provider.of<FloatingCardsBloc>(context);
+
+    return PageView(
+      controller: bloc.pageController.value,
+      scrollDirection: Axis.horizontal,
+      children: [
+        buildPage(buildNextEventContainer(context)),
+        buildPage(
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(2)),
+            ),
+          ),
+        ),
+        buildPage(
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(2)),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildPage(Widget content) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: content,
+    );
+  }
+
+  Widget buildNextEventContainer(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(2)),
+        ),
+        constraints: BoxConstraints.expand(
+          height: Theme.of(context).textTheme.display1.fontSize * 1.1 + 200.0,
+        ),
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Próximo evento',
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 15,
+                fontFamily: 'Trueno',
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+            Text(
+              '15',
+              style: TextStyle(
+                color: Color(0xFF0D47A1),
+                fontSize: 78,
+                fontFamily: 'Trueno',
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+            Text(
+              'Sábado',
+              style: TextStyle(
+                color: Colors.black87,
+                fontSize: 15,
+                fontFamily: 'Trueno',
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+            Text(
+              'Janeiro de 2020',
+              style: TextStyle(
+                color: Colors.black87,
+                fontSize: 15,
+                fontFamily: 'Trueno',
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+            Text(
+              'AcampADAD Extreme',
+              style: TextStyle(
+                color: Colors.green,
+                fontSize: 18,
+                fontFamily: 'Trueno',
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+        ],
+      ),
+      transform: Matrix4.rotationZ(0.0),
+    );
+  }
+}
+
+class PageIndicator extends StatefulWidget {
+  final PageController controller;
+
+  PageIndicator({
+    @required this.controller,
+  });
+
+  @override
+  State<StatefulWidget> createState() => _PageIndicatorState();
+}
+
+class _PageIndicatorState extends State<PageIndicator> {
+  PageController get controller => widget.controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(scrollListener);
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(scrollListener);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!controller.hasClients) {
+      return Container();
+    }
+
+    CustomPainter indicatorPainter = CirclePainter(
+      color: Color.fromRGBO(255, 255, 255, .3),
+      selectedColor: Colors.white,
+      count: 3,
+      page: widget.controller.page ?? controller.initialPage.toDouble(),
+      padding: 4,
+      radius: 4 / 2,
+    );
+
+    return CustomPaint(
+      painter: indicatorPainter,
+    );
+  }
+
+  void scrollListener() {
+    setState(() {});
+  }
+}
+
+class CirclePainter extends CustomPainter {
+  double page;
+  int count;
+  Color color;
+  Color selectedColor;
+  double radius;
+  double padding;
+  Paint _circlePaint;
+  Paint _selectedPaint;
+
+  CirclePainter({
+    this.page = 0.0,
+    this.count = 0,
+    this.color = Colors.white,
+    this.selectedColor = Colors.grey,
+    this.radius = 12.0,
+    this.padding = 5.0,
+  }) {
+    _circlePaint = Paint();
+    _circlePaint.color = color;
+
+    _selectedPaint = Paint();
+    _selectedPaint.color = selectedColor;
+
+    this.page ??= 0.0;
+    this.count ??= 0;
+    this.color ??= Colors.white;
+    this.selectedColor ??= Colors.grey;
+    this.radius ??= 12.0;
+    this.padding ??= 5.0;
+  }
+
+  double get totalWidth => count * radius * 2 + padding * (count - 1);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    var centerWidth = size.width / 2;
+
+    var startX = centerWidth - totalWidth / 2;
+
+    for (var i = 0; i < count ?? 0; i++) {
+      var x = startX + i * (radius * 2 + padding) + radius;
+      canvas.drawCircle(Offset(x, radius), radius, _circlePaint);
+    }
+
+    var selectedX = startX + page * (radius * 2 + padding) + radius;
+    canvas.drawCircle(Offset(selectedX, radius), radius, _selectedPaint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
