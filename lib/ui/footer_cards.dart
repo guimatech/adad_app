@@ -27,7 +27,7 @@ class _FooterCardsState extends State<FooterCards> {
       text: "Professores",
     ),
     FooterCardItem(
-      icon: Icons.collections_bookmark,
+      icon: Icons.school,
       text: "Disciplinas",
     )
   ];
