@@ -257,14 +257,14 @@
         Widget buildContainerBottom(BuildContext context) {
           return Container(
             decoration: BoxDecoration(
-              color: Colors.grey[300],
+              color: Colors.grey[100],
             ),
             constraints: BoxConstraints.expand(
               height: Theme.of(context).textTheme.display1.fontSize * 1.1 + 50.0,
             ),
             alignment: Alignment.bottomCenter,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[]
             ),
           );
