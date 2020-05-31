@@ -122,7 +122,9 @@
               Page(
                 icon: Icons.event,
                 title: 'Próximo evento',
-                child: buildNextEventContainer(context)
+                child: buildNextEventContainer(context),
+                nextIcon: Icons.event,
+                nextTitle: 'Próximo evento',
               ),
               Page(
                 icon: Icons.monetization_on,
@@ -133,6 +135,8 @@
                     borderRadius: BorderRadius.all(Radius.circular(2)),
                   ),
                 ),
+                nextIcon: Icons.save_alt,
+                nextTitle: 'Pagamento de R\$ 130,00 recebido de Fulano de Tal',
               ),
             ],
           );
@@ -187,11 +191,15 @@
         final IconData icon;
         final String title;
         final Widget child;
+        final IconData nextIcon;
+        final String nextTitle;
 
         Page({
           @required this.icon,
           @required this.title,
           @required this.child,
+          @required this.nextIcon,
+          @required this.nextTitle,
           Key key
         }) : super(key: key);
 
@@ -213,9 +221,6 @@
                   children: <Widget>[
                     buildContainerTop(),
                     child,
-                    SizedBox(
-                      height: 20,
-                    ),
                     buildContainerBottom(context),
                   ],
                 ),
@@ -256,16 +261,48 @@
 
         Widget buildContainerBottom(BuildContext context) {
           return Container(
+            padding: EdgeInsets.only(left: 30, right: 15),
             decoration: BoxDecoration(
               color: Colors.grey[100],
             ),
             constraints: BoxConstraints.expand(
               height: Theme.of(context).textTheme.display1.fontSize * 1.1 + 50.0,
             ),
-            alignment: Alignment.bottomCenter,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[]
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Icon(
+                      nextIcon,
+                      color: Colors.grey,
+                      size: 25,
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Container(
+                      width: Theme.of(context).textTheme.display1.fontSize * 1.1 + 200.0,
+                      child: Text(
+                        nextTitle,
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 12,
+                          fontFamily: 'Trueno',
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Icon(
+                  Icons.navigate_next,
+                  color: Colors.grey,
+                  size: 25,
+                )
+              ]
             ),
           );
         }
