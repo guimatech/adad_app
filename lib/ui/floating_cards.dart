@@ -209,7 +209,7 @@
                 ),
                 alignment: Alignment.center,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     buildContainerTop(),
                     child,
