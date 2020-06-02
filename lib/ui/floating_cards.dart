@@ -124,7 +124,7 @@
                 title: 'Próximo evento',
                 child: buildNextEventContainer(context),
                 nextIcon: Icons.event,
-                nextTitle: 'Próximo evento',
+                nextTitle: 'Reunião de líderes, Sexta-feira, 14 de fevereiro de 2020',
               ),
               Page(
                 icon: Icons.monetization_on,
