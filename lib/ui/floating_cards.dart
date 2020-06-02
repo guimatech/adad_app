@@ -129,12 +129,7 @@
               Page(
                 icon: Icons.monetization_on,
                 title: 'Caixa',
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(2)),
-                  ),
-                ),
+                child: buildBalanceContainer(context),
                 nextIcon: Icons.save_alt,
                 nextTitle: 'Pagamento de R\$ 130,00 recebido de Fulano de Tal',
               ),
@@ -183,6 +178,40 @@
                   ),
                 ),
             ],
+          );
+        }
+
+        Widget buildBalanceContainer(BuildContext context) {
+          return Container(
+              padding: EdgeInsets.only(left: 30, bottom: 40),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                          'Saldo disponível',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14,
+                          fontFamily: 'Trueno',
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      Text(
+                        'R\$ 995,83',
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 40,
+                          fontFamily: 'Trueno',
+                          fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                ),
+              ]
+            ),
           );
         }
       }
@@ -284,7 +313,7 @@
                       width: 15,
                     ),
                     Container(
-                      width: Theme.of(context).textTheme.display1.fontSize * 1.1 + 200.0,
+                      width: Theme.of(context).textTheme.display1.fontSize * 1.1 + 170.0,
                       child: Text(
                         nextTitle,
                         style: TextStyle(
