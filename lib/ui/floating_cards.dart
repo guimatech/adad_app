@@ -1,5 +1,5 @@
       import 'dart:math';
-
+      import 'package:adad_app/ui/event.dart';
       import 'package:flutter/material.dart';
       import 'package:adad_app/blocs/floating_cards_bloc.dart';
       import 'package:provider/provider.dart';
@@ -145,7 +145,7 @@
                   '15',
                   style: TextStyle(
                     color: Color(0xFF0D47A1),
-                    fontSize: 78,
+                    fontSize: 58,
                     fontFamily: 'Trueno',
                     fontWeight: FontWeight.w300,
                   ),
@@ -205,7 +205,7 @@
                           color: Colors.black87,
                           fontSize: 40,
                           fontFamily: 'Trueno',
-                          fontWeight: FontWeight.normal,
+                          fontWeight: FontWeight.w300,
                       ),
                     ),
                   ],
@@ -236,30 +236,42 @@
         Widget build(BuildContext context) {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(2)),
+            child: Material(
+              color: Colors.white,
+              child: InkWell(
+                onTap: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => EventPage()
+                    )
+                  )
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(2)),
+                  ),
+                  constraints: BoxConstraints.expand(
+                    height: Theme.of(context).textTheme.display1.fontSize * 1.1 + 200.0,
+                  ),
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      buildContainerTop(),
+                      child,
+                      buildContainerBottom(context),
+                    ],
+                  ),
                 ),
-                constraints: BoxConstraints.expand(
-                  height: Theme.of(context).textTheme.display1.fontSize * 1.1 + 200.0,
-                ),
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    buildContainerTop(),
-                    child,
-                    buildContainerBottom(context),
-                  ],
-                ),
-            )
+              ),
+            ),
           );
         }
 
         Widget buildContainerTop() {
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+            padding: EdgeInsets.only(left: 30, top: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
