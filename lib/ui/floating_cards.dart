@@ -1,5 +1,5 @@
       import 'dart:math';
-      import 'package:adad_app/ui/event.dart';
+      import 'package:adad_app/events/events.dart';
       import 'package:flutter/material.dart';
       import 'package:adad_app/blocs/floating_cards_bloc.dart';
       import 'package:provider/provider.dart';
