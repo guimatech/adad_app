@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+
 import 'package:adad_app/events/shared/event.model.dart';
 import 'package:adad_app/events/shared/event.service.dart';
 
@@ -89,7 +91,7 @@ class _EventPageState extends State<EventPage> {
               ),
             ),
             Text(
-              events[index].date.weekday.toString(),
+              DateFormat.EEEE().format(events[index].date),
               style: TextStyle(
                 color: Colors.black87,
                 fontSize: 15,
@@ -98,7 +100,7 @@ class _EventPageState extends State<EventPage> {
               ),
             ),
             Text(
-              "${events[index].date.month.toString()} de ${events[index].date.year.toString()}" ,
+              "${DateFormat.MMMM().format(events[index].date)} de ${events[index].date.year.toString()}" ,
               style: TextStyle(
                 color: Colors.black87,
                 fontSize: 15,

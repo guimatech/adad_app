@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
+
 import 'package:adad_app/blocs/floating_cards_bloc.dart';
 import 'package:adad_app/ui/app.dart';
 
@@ -14,6 +17,8 @@ class _AdadApp extends StatelessWidget {
     );
 
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    Intl.defaultLocale = 'pt_BR';
+    initializeDateFormatting();
 
     return MultiProvider(
       providers: [
