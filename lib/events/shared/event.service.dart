@@ -11,12 +11,14 @@ class EventService {
 
   Future<List<Event>> getAll() async {
     final response = await http.get(
-      'http://10.0.2.2:3000/events',
-      headers: <String, String>{ "Accept": "application/vnd.api+json"  }
+        Uri.http('10.0.2.2:8080', '/events'),
+        headers: <String, String>{ "Accept": "application/vnd.api+json",
+          "Content-Type": "text/html; charset=utf-8"}
     );
 
     if (response.statusCode == 200) {
-      return parseEvents(response.body);
+      String body = utf8.decode(response.bodyBytes);
+      return parseEvents(body);
     } else {
       throw Exception('Failed to load events');
     }
@@ -24,8 +26,9 @@ class EventService {
 
   Future<Event> getById(int id) async {
     final response = await http.get(
-        "http://10.0.2.2:3000/events/${id.toString()}",
-        headers: <String, String>{ "Accept": "application/vnd.api+json"  }
+        Uri.http('10.0.2.2:8080', '/events/${id.toString()}'),
+        headers: <String, String>{ "Accept": "application/vnd.api+json",
+          "Content-Type": "text/html; charset=utf-8" }
     );
 
     if (response.statusCode == 200) {
