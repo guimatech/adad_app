@@ -1,6 +1,7 @@
 import 'package:adad_app/events/events.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class AppPage extends StatefulWidget {
   AppPage({Key key}) : super(key: key);
@@ -54,30 +55,33 @@ class _AppPageState extends State<AppPage> {
 
   StatelessWidget menuList() {
     return Container(
-      color: Color(0xFF6E9ADD),
-      child: GridView.count(
-          primary: false,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          crossAxisSpacing: 1,
-          mainAxisSpacing: 1,
-          crossAxisCount: 1,
-          children: <Widget>[
-              Page(
-                icon: Icons.event,
-                title: 'Próximo evento',
-                child: buildNextEventContainer(context),
-                nextIcon: Icons.event,
-                nextTitle: 'Reunião de líderes, Sexta-feira, 14 de fevereiro de 2020',
-              ),
-              Page(
-                icon: Icons.monetization_on,
-                title: 'Caixa',
-                child: buildBalanceContainer(context),
-                nextIcon: Icons.save_alt,
-                nextTitle: 'Pagamento de R\$ 130,00 recebido de Fulano de Tal',
-              ),
-            ],
-          )
+      color: Colors.grey[100],
+      child: StaggeredGridView.count(
+        primary: false,
+        crossAxisCount: 1,
+        mainAxisSpacing: 1,
+        crossAxisSpacing: 1,
+        staggeredTiles: <StaggeredTile>[
+          StaggeredTile.count(1, .4),
+          StaggeredTile.count(1, .6),
+        ],
+        children: <Widget>[
+          Page(
+            icon: Icons.monetization_on,
+            title: 'Caixa',
+            child: buildBalanceContainer(context),
+            nextIcon: Icons.save_alt,
+            nextTitle: 'Pagamento de R\$ 130,00 recebido de Fulano de Tal',
+          ),
+          Page(
+            icon: Icons.event,
+            title: 'Próximo evento',
+            child: buildNextEventContainer(context),
+            nextIcon: Icons.event,
+            nextTitle: 'Reunião de líderes, Sexta-feira, 14 de fevereiro de 2020',
+          ),
+        ],
+      ),
     );
   }
 
@@ -127,7 +131,7 @@ class _AppPageState extends State<AppPage> {
 
   Widget buildBalanceContainer(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 30, bottom: 30),
+      padding: const EdgeInsets.only(left: 30),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -179,32 +183,25 @@ class Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 2),
       child: Material(
         color: Colors.white,
         child: InkWell(
           onTap: () => {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => EventPage()
-                )
+              context,
+              MaterialPageRoute(
+                  builder: (_) => EventPage()
+              )
             )
           },
           child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(2)),
-            ),
-            constraints: BoxConstraints.expand(
-              height: Theme.of(context).textTheme.display1.fontSize * 1.1 + 250,
-            ),
             alignment: Alignment.center,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                buildContainerTop(),
+                buildContainerTop(context),
                 child,
-                buildContainerBottom(context),
               ],
             ),
           ),
@@ -213,45 +210,11 @@ class Page extends StatelessWidget {
     );
   }
 
-  Widget buildContainerTop() {
-    return Padding(
-      padding: EdgeInsets.only(left: 30, top: 30),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Icon(
-            icon,
-            color: Colors.grey,
-            size: 25,
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            child: Text(
-              title,
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 15,
-                fontFamily: 'Trueno',
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildContainerBottom(BuildContext context) {
+  Widget buildContainerTop(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 30, right: 15),
-      decoration: BoxDecoration(
-        color: Colors.grey[100],
-      ),
+      padding: const EdgeInsets.only(left: 30, right: 15),
       constraints: BoxConstraints.expand(
-        height: Theme.of(context).textTheme.display1.fontSize * 1.1 + 50,
+        height: Theme.of(context).textTheme.display1.fontSize * 1.1 + 20,
       ),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -269,12 +232,11 @@ class Page extends StatelessWidget {
                   width: 15,
                 ),
                 Container(
-                  width: Theme.of(context).textTheme.display1.fontSize * 1.1 + 170.0,
                   child: Text(
-                    nextTitle,
+                    title,
                     style: TextStyle(
                       color: Colors.black87,
-                      fontSize: 12,
+                      fontSize: 15,
                       fontFamily: 'Trueno',
                       fontWeight: FontWeight.normal,
                     ),
