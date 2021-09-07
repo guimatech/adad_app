@@ -70,15 +70,12 @@ class _AppPageState extends State<AppPage> {
             icon: Icons.monetization_on,
             title: 'Caixa',
             child: buildBalanceContainer(context),
-            nextIcon: Icons.save_alt,
-            nextTitle: 'Pagamento de R\$ 130,00 recebido de Fulano de Tal',
           ),
           Page(
             icon: Icons.event,
             title: 'Próximo evento',
             child: buildNextEventContainer(context),
-            nextIcon: Icons.event,
-            nextTitle: 'Reunião de líderes, Sexta-feira, 14 de fevereiro de 2020',
+            builder: (_) => EventPage(),
           ),
         ],
       ),
@@ -168,15 +165,13 @@ class Page extends StatelessWidget {
   final IconData icon;
   final String title;
   final Widget child;
-  final IconData nextIcon;
-  final String nextTitle;
+  final WidgetBuilder builder;
 
   Page({
     @required this.icon,
     @required this.title,
     @required this.child,
-    @required this.nextIcon,
-    @required this.nextTitle,
+    this.builder,
     Key key
   }) : super(key: key);
 
@@ -191,7 +186,7 @@ class Page extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (_) => EventPage()
+                  builder: builder
               )
             )
           },
@@ -224,7 +219,7 @@ class Page extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Icon(
-                  nextIcon,
+                  icon,
                   color: Colors.grey,
                   size: 25,
                 ),
