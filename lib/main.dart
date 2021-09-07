@@ -1,4 +1,5 @@
 import 'package:adad_app/events/events.dart';
+import 'package:adad_app/ui/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -22,7 +23,7 @@ class _AdadApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ADAD App',
-      home: EventPage(),
+      home: AppPage(),
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: Color(0xFF0D47A1),
