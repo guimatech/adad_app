@@ -17,7 +17,7 @@ class _AdadApp extends StatelessWidget {
     );
 
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    Intl.defaultLocale = 'pt_Br';
+    Intl.defaultLocale = 'pt_br';
     initializeDateFormatting();
 
     return MaterialApp(

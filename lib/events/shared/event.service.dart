@@ -10,31 +10,31 @@ class EventService {
   }
 
   Future<List<Event>> getAll() async {
-    final response = await http.get(
-        Uri.http('10.0.2.2:8080', '/events'),
-        headers: <String, String>{ "Accept": "application/vnd.api+json",
-          "Content-Type": "text/html; charset=utf-8"}
-    );
+    final response = await http.get(Uri.http('10.0.2.2:8080', '/events'));
 
-    if (response.statusCode == 200) {
-      String body = utf8.decode(response.bodyBytes);
-      return parseEvents(body);
-    } else {
+    if (response.statusCode != 200)
       throw Exception('Failed to load events');
-    }
+
+    return parseEvents(utf8.decode(response.bodyBytes));
   }
 
   Future<Event> getById(int id) async {
     final response = await http.get(
-        Uri.http('10.0.2.2:8080', '/events/${id.toString()}'),
-        headers: <String, String>{ "Accept": "application/vnd.api+json",
-          "Content-Type": "text/html; charset=utf-8" }
+        Uri.http('10.0.2.2:8080', '/events/${id.toString()}')
     );
 
-    if (response.statusCode == 200) {
-      return Event.fromJson(json.decode(response.body));
-    } else {
+    if (response.statusCode != 200)
       throw Exception('Failed to load events');
-    }
+
+    return Event.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+  }
+
+  Future<Event> getLast() async {
+    final response = await http.get(Uri.http('10.0.2.2:8080', '/eventlast'));
+
+    if (response.statusCode != 200)
+      throw Exception('Failed to load events');
+
+    return Event.fromJson(json.decode(utf8.decode(response.bodyBytes)));
   }
 }
